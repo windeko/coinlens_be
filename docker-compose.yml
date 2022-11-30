@@ -1,0 +1,50 @@
+version: '3.3'
+services:
+  dev:
+    container_name: coinlense_be_dev
+    image: coinlense_be_dev:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3500:3000
+      - 3501:9229
+    networks:
+      - nesjs-network
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+  mongodb:
+    image : mongo:latest
+    container_name: mongodb
+    volumes:
+      - ./database:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - nesjs-network
+    restart: always
+  prod:
+    container_name: coinlense_be_prod
+    image: coinlense_be_prod:1.0.0
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    ports:
+      - 3500:3000
+      - 9229:9229
+    networks:
+      - nesjs-network
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+networks:
+  nesjs-network:
+    driver: bridge
