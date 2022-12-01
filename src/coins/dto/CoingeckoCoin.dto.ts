@@ -1,3 +1,9 @@
+export class CoingeckoCoinRoiDto {
+  times: number;
+  currency: string;
+  percentage: number;
+}
+
 export class CoingeckoCoinDto {
   id: string;
   symbol: string;
@@ -23,10 +29,11 @@ export class CoingeckoCoinDto {
   atl: number;
   atl_change_percentage: number;
   atl_date: string;
-  roi?: {
-    times: number;
-    currency: string;
-    percentage: number;
-  };
+  roi?: CoingeckoCoinRoiDto;
   last_updated: Date;
+  price_change_percentage_1h_in_currency: number;
+  price_change_percentage_24h_in_currency: number;
+  price_change_percentage_7d_in_currency: number;
+  price_change_percentage_30d_in_currency: number;
+  price_change_percentage_1y_in_currency: number;
 }
